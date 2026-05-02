@@ -15,7 +15,7 @@ const C = {
 
 const navLinks = [
     { label: "Home", href: "/" },
-    { label: "All Animals", href: "/all-animals" },
+    { label: "All-Animals", href: "/all-animals" },
 ];
 
 const Navbar = () => {

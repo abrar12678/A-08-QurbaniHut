@@ -9,7 +9,7 @@
         "age": 3,
         "location": "Bogura",
         "description": "Healthy deshi cow suitable for Qurbani. Well fed with natural খাবার.",
-        "image": "https://i.postimg.cc/example-cow1.jpg",
+        "image": "https://images.unsplash.com/photo-1516467508483-a7212febe31a",
         "category": "Large Animal"
     },
     {
@@ -22,7 +22,7 @@
         "age": 4,
         "location": "Dhaka",
         "description": "Strong and healthy bull with premium feeding and proper care.",
-        "image": "https://i.postimg.cc/example-cow2.jpg",
+        "image": "https://images.unsplash.com/photo-1516467508483-a7212febe31a",
         "category": "Large Animal"
     },
     {
@@ -35,7 +35,7 @@
         "age": 3,
         "location": "Sirajganj",
         "description": "Beautiful white cow perfect for Qurbani and farm use.",
-        "image": "https://i.postimg.cc/example-cow3.jpg",
+        "image": "https://images.unsplash.com/photo-1545468800-85cc9bc6ecf7",
         "category": "Large Animal"
     },
     {
@@ -48,7 +48,7 @@
         "age": 2,
         "location": "Rajshahi",
         "description": "Healthy Black Bengal goat with natural feeding.",
-        "image": "https://i.postimg.cc/example-goat1.jpg",
+        "image": "https://images.unsplash.com/photo-1527153857715-3908f2bae5e8",
         "category": "Small Animal"
     },
     {
@@ -61,7 +61,7 @@
         "age": 2,
         "location": "Khulna",
         "description": "Large size goat suitable for family Qurbani.",
-        "image": "https://i.postimg.cc/example-goat2.jpg",
+        "image": "https://images.unsplash.com/photo-1508672019048-805c876b67e2",
         "category": "Small Animal"
     },
     {
@@ -74,7 +74,7 @@
         "age": 5,
         "location": "Chattogram",
         "description": "Imported breed dairy cow with excellent health condition.",
-        "image": "https://i.postimg.cc/example-cow4.jpg",
+        "image": "https://images.unsplash.com/photo-1596733430284-f7437764b1a9",
         "category": "Large Animal"
     },
     {
@@ -87,7 +87,7 @@
         "age": 3,
         "location": "Mymensingh",
         "description": "Naturally raised red bull with organic feeding system.",
-        "image": "https://i.postimg.cc/example-cow5.jpg",
+        "image": "https://images.unsplash.com/photo-1662127938458-0c5d7f3536bc",
         "category": "Large Animal"
     },
     {
@@ -100,7 +100,7 @@
         "age": 2,
         "location": "Cumilla",
         "description": "Farm raised goat with balanced nutrition and care.",
-        "image": "https://i.postimg.cc/example-goat3.jpg",
+        "image": "https://images.unsplash.com/photo-1517849845537-4d257902454a",
         "category": "Small Animal"
     },
     {
@@ -113,7 +113,46 @@
         "age": 6,
         "location": "Rangpur",
         "description": "Massive bull specially prepared for Eid-ul-Adha Qurbani.",
-        "image": "https://i.postimg.cc/example-cow6.jpg",
+        "image": "https://images.unsplash.com/photo-1504593811423-6dd665756598",
         "category": "Large Animal"
+    },
+    {
+        "id": 10,
+        "name": "Organic Village Goat",
+        "type": "Goat",
+        "breed": "Black Bengal",
+        "price": 28000,
+        "weight": 38,
+        "age": 2,
+        "location": "Barishal",
+        "description": "Village raised organic goat with strong health condition.",
+        "image": "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+        "category": "Small Animal"
+    },
+    {
+        "id": 11,
+        "name": "Mega Farm Bull",
+        "type": "Cow",
+        "breed": "Sindhi Cross",
+        "price": 260000,
+        "weight": 580,
+        "age": 5,
+        "location": "Sylhet",
+        "description": "Huge farm bull with excellent body structure and natural feeding.",
+        "image": "https://images.unsplash.com/photo-1484406566174-9da000fda645",
+        "category": "Large Animal"
+    },
+    {
+        "id": 12,
+        "name": "Brown Beauty Goat",
+        "type": "Goat",
+        "breed": "Jamunapari",
+        "price": 36000,
+        "weight": 45,
+        "age": 3,
+        "location": "Noakhali",
+        "description": "Beautiful brown goat suitable for medium family Qurbani.",
+        "image": "https://images.unsplash.com/photo-1516934024742-b461fba47600",
+        "category": "Small Animal"
     }
 ]

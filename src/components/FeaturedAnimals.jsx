@@ -1,24 +1,22 @@
-import React from 'react';
-
+import AnimalsCard from './AnimalsCard';
 
 const FeaturedAnimals = async () => {
-    // const res = await fetch("https://localhost:3000/data/animalsData.json");
-    // const data = await res.json();
+    const res = await fetch("https://a-08-qurbani-hut.vercel.app/animalsData.json", {
+        cache: "no-store" // ✅ Add cache control
+    });
+    const data = await res.json();
+    const featuredCards = data.slice(0, 4);
+
     return (
-        <div>
-            {/* <h2 className="text-5xl font-bold text-center text-black bg-white py-5">
+        <div className="bg-white py-8">
+            <h2 className="text-5xl font-bold text-center text-gray-900 py-5">
                 Featured Animals
             </h2>
-            <div className="grid grid-cols-3 gap-6 px-10 py-5">
-                {data.map((animal) => (
-                    <div key={animal.id} className="bg-gray-100 p-4 rounded-lg shadow-md">
-                        <img src={animal.image} alt={animal.name} className="w-full h-48 object-cover rounded-md" />
-                        <h3 className="text-xl font-bold mt-2">{animal.name}</h3>
-                        <p className="text-gray-600">{animal.description}</p>
-                        <p className="text-lg font-bold text-green-500">${animal.price.toLocaleString()}</p>
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 container mx-auto px-4 my-4">
+                {featuredCards.map((animal) => (
+                    <AnimalsCard key={animal.id} data={animal} />
                 ))}
-            </div> */}
+            </div>
         </div>
     );
 };
