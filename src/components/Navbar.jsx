@@ -98,22 +98,27 @@ const Navbar = () => {
                         </>
                     ) : (
                         <div className="flex items-center gap-3">
-                            {/* User Avatar + Name */}
-                            <Link href="/profile" className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-1.5 transition-all duration-200 hover:border-gray-300 hover:shadow-sm">
-                                <Avatar className="h-8 w-8">
-                                    <Avatar.Image
-                                        alt={user?.name || "User"}
-                                        src={user?.image}
-                                        referrerPolicy="no-referrer"
-                                    />
-                                    <Avatar.Fallback className="bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white text-xs font-semibold">
-                                        {user?.name?.charAt(0)?.toUpperCase() || "U"}
-                                    </Avatar.Fallback>
-                                </Avatar>
-                                <span className="text-sm font-medium text-gray-700 max-w-[100px] truncate">
-                                    {user?.name}
-                                </span>
+                            {/* Circular Profile Avatar */}
+                            <Link href="/profile" className="group relative">
+                                <div className="h-10 w-10 rounded-full ring-2 ring-offset-2 ring-gray-200 transition-all duration-200 group-hover:ring-[#8B5CF6] overflow-hidden bg-gray-100">
+                                    <Avatar className="h-10 w-10">
+                                        <Avatar.Image
+                                            alt={user?.name || "User"}
+                                            src={user?.image}
+                                            referrerPolicy="no-referrer"
+                                            className="h-10 w-10 object-cover"
+                                        />
+                                        <Avatar.Fallback className="bg-gradient-to-br from-[#8B5CF6] to-[#EC4899] text-white text-sm font-bold">
+                                            {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                                        </Avatar.Fallback>
+                                    </Avatar>
+                                </div>
                             </Link>
+
+                            {/* User Name */}
+                            <span className="text-sm font-medium text-gray-700 max-w-[100px] truncate">
+                                {user?.name}
+                            </span>
 
                             {/* Logout Button */}
                             <button

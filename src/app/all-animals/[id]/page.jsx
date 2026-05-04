@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import BuyForm from './BuyForm';
 
 const page = async ({ params }) => {
     const { id } = await params;
@@ -11,9 +12,11 @@ const page = async ({ params }) => {
 
     if (!res.ok) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <p className="text-red-500">Failed to fetch data.</p>
-            </div>
+            <ProtectedRoute>
+                <div className="min-h-screen bg-white flex items-center justify-center">
+                    <p className="text-red-500">Failed to fetch data.</p>
+                </div>
+            </ProtectedRoute>
         );
     }
 
@@ -124,11 +127,11 @@ const page = async ({ params }) => {
                                 </span>
                             </div>
 
-                            {/* Action Buttons */}
+                            {/* Buy Form + Browse More */}
                             <div className="flex gap-3 pt-1">
-                                <button className="flex-1 rounded-xl px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:shadow-md hover:brightness-95" style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}>
-                                    Buy Now
-                                </button>
+                                <div className="flex-1">
+                                    <BuyForm animal={animal} />
+                                </div>
                                 <Link href="/all-animals" className="flex-1">
                                     <button className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300">
                                         Browse More
