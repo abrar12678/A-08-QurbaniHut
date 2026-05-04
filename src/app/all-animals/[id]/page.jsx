@@ -132,11 +132,12 @@ const page = async ({ params }) => {
                                 <div className="flex-1">
                                     <BuyForm animal={animal} />
                                 </div>
-                                <Link href="/all-animals" className="flex-1">
+                                {/* <Link href="/all-animals" className="flex-1">
                                     <button className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-gray-50 hover:border-gray-300">
                                         Browse More
                                     </button>
-                                </Link>
+                                </Link>  */}
+                                
                             </div>
                         </div>
                     </div>

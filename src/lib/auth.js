@@ -26,8 +26,9 @@ export const auth = betterAuth({
     },
   },
   trustedOrigins: [
-  "https://a-08-qurbanihut.vercel.app",
-  "http://localhost:3000",
-  "https://opulent-xylophone-7v6qx57j7r5gfgrrr-3000.app.github.dev",
-],
+    "https://a-08-qurbanihut.vercel.app",
+    "http://localhost:3000",
+    "https://opulent-xylophone-7v6qx57j7r5gfgrrr-3000.app.github.dev"
+
+  ],
 });
