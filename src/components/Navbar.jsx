@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Avatar } from "@heroui/react";
 
@@ -10,12 +10,20 @@ const Navbar = () => {
     const session = authClient.useSession();
     const user = session.data?.user;
 
-    const handleSignOut = async () => {
-        await authClient.signOut();
-    };
-
     const pathname = usePathname();
+    const router = useRouter();
     const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleSignOut = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/");
+                    router.refresh();
+                },
+            },
+        });
+    };
 
     // Profile link will only show if user is logged in
     const navLinks = [

@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import { Avatar } from "@heroui/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { BiUser, BiEnvelope, BiCalendar, BiEdit, BiLogOut } from "react-icons/bi";
 
 const ProfilePage = () => {
@@ -13,8 +13,17 @@ const ProfilePage = () => {
     redirect("/signin");
   }
 
+  const router = useRouter();
+
   const handleSignOut = async () => {
-    await authClient.signOut();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+          router.refresh();
+        },
+      },
+    });
   };
 
   const initials = user?.name
