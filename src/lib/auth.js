@@ -19,4 +19,5 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true
   },
+  trustedOrigins: ["https://a-08-qurbanihut.vercel.app"],
 });
