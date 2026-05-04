@@ -5,7 +5,7 @@ const page = async ({ params }) => {
     // ✅ Await params for Next.js 15
     const { id } = await params;
 
-    const res = await fetch("https://a-08-qurbani-hut.vercel.app/animalsData.json", {
+    const res = await fetch("https://a-08-qurbanihut.vercel.app/animalsData.json", {
         cache: "no-store"
     });
 
