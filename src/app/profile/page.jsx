@@ -3,7 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import { Avatar } from "@heroui/react";
 import { redirect } from "next/navigation";
-import { BiUser, BiMail, BiCalendar, BiEdit, BiLogOut } from "react-icons/bi";
+import { BiUser, BiEnvelope, BiCalendar, BiEdit, BiLogOut } from "react-icons/bi";
 
 const ProfilePage = () => {
   const userData = authClient.useSession();
@@ -87,7 +87,7 @@ const ProfilePage = () => {
 
               <div className="flex items-center gap-4 rounded-2xl bg-gray-50 px-5 py-4 border border-gray-100">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-r from-[#EC4899] to-[#F59E0B] text-white">
-                  <BiMail className="text-lg" />
+                  <BiEnvelope className="text-lg" />
                 </div>
                 <div>
                   <p className="text-xs text-gray-400 uppercase tracking-wider">Email Address</p>
