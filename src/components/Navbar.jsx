@@ -4,23 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import { Avatar, Button } from "@heroui/react";
-
-const C = {
-    gradient: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)",
-    purple: "#8B5CF6",
-    pink: "#EC4899",
-    yellow: "#F59E0B",
-    cream: "#F5EDD8",
-    dark: "#08150d",
-    surface: "rgba(255,255,255,0.08)",
-};
-
-const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "All-Animals", href: "/all-animals" },
-    { label: "Profile", href: "/profile" },
-];
+import { Avatar } from "@heroui/react";
 
 const Navbar = () => {
     const session = authClient.useSession();
@@ -33,24 +17,36 @@ const Navbar = () => {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
 
+    // Profile link will only show if user is logged in
+    const navLinks = [
+        { label: "Home", href: "/" },
+        { label: "All Animals", href: "/all-animals" },
+    ];
+
+    if (user) {
+        navLinks.push({ label: "Profile", href: "/profile" });
+    }
+
     return (
-        <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100 shadow-sm">
             <div className="container mx-auto flex items-center justify-between px-6 py-4 lg:px-10">
+                {/* Logo */}
                 <Link href="/" className="flex items-center gap-3">
                     <div
-                        className="flex h-12 w-12 items-center justify-center rounded-3xl text-xl"
+                        className="flex h-12 w-12 items-center justify-center rounded-2xl text-xl shadow-sm"
                         style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
                     >
                         🐄
                     </div>
                     <div>
-                        <p className="text-lg font-semibold tracking-[0.18em] text-gray-900">
+                        <p className="text-lg font-bold tracking-[0.18em] text-gray-900">
                             Qurbani<span className="bg-gradient-to-r from-[#8B5CF6] via-[#EC4899] to-[#F59E0B] bg-clip-text text-transparent">Hut</span>
                         </p>
-                        <p className="text-xs uppercase tracking-[0.35em] text-gray-500">Livestock booking</p>
+                        <p className="text-[10px] uppercase tracking-[0.35em] text-gray-400">Livestock booking</p>
                     </div>
                 </Link>
 
+                {/* Desktop Nav Links */}
                 <nav className="hidden items-center gap-8 lg:flex">
                     {navLinks.map((item) => {
                         const isActive = pathname === item.href;
@@ -58,30 +54,35 @@ const Navbar = () => {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`text-sm font-medium transition ${isActive
-                                    ? "text-gray-900 underline decoration-[#8B5CF6] underline-offset-8"
-                                    : "text-gray-600 hover:text-gray-900"
-                                    }`}
+                                className={`text-sm font-medium transition-all duration-200 ${
+                                    isActive
+                                        ? "text-gray-900"
+                                        : "text-gray-500 hover:text-gray-900"
+                                }`}
                                 aria-current={isActive ? "page" : undefined}
                             >
                                 {item.label}
+                                {isActive && (
+                                    <span className="block mx-auto mt-1 h-0.5 w-5 rounded-full" style={{ background: "linear-gradient(90deg, #8B5CF6, #EC4899)" }} />
+                                )}
                             </Link>
                         );
                     })}
                 </nav>
 
+                {/* Desktop Auth Section */}
                 <div className="hidden items-center gap-3 lg:flex">
                     {!user ? (
                         <>
                             <Link
                                 href="/signin"
-                                className="rounded-full border border-gray-300 bg-gray-50 px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                className="rounded-full border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 transition-all duration-200 hover:border-gray-300 hover:bg-gray-50 hover:shadow-sm"
                             >
                                 Sign In
                             </Link>
                             <Link
                                 href="/signup"
-                                className="rounded-full px-5 py-2 text-sm font-semibold text-white transition hover:brightness-95"
+                                className="rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:shadow-md hover:brightness-95"
                                 style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
                             >
                                 Sign Up
@@ -89,17 +90,27 @@ const Navbar = () => {
                         </>
                     ) : (
                         <div className="flex items-center gap-3">
-                            <Avatar size="sm">
-                                <Avatar.Image
-                                    alt={user?.name || "User"}
-                                    src={user?.image}
-                                    referrerPolicy="no-referrer"
-                                />
-                                <Avatar.Fallback>{user?.name?.charAt(0) || "U"}</Avatar.Fallback>
-                            </Avatar>
+                            {/* User Avatar + Name */}
+                            <Link href="/profile" className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-3 py-1.5 transition-all duration-200 hover:border-gray-300 hover:shadow-sm">
+                                <Avatar className="h-8 w-8">
+                                    <Avatar.Image
+                                        alt={user?.name || "User"}
+                                        src={user?.image}
+                                        referrerPolicy="no-referrer"
+                                    />
+                                    <Avatar.Fallback className="bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white text-xs font-semibold">
+                                        {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                                    </Avatar.Fallback>
+                                </Avatar>
+                                <span className="text-sm font-medium text-gray-700 max-w-[100px] truncate">
+                                    {user?.name}
+                                </span>
+                            </Link>
+
+                            {/* Logout Button */}
                             <button
                                 onClick={handleSignOut}
-                                className="rounded-full border border-red-300 bg-red-50 px-5 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                                className="rounded-full border border-red-200 bg-white px-5 py-2.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:border-red-300 hover:shadow-sm"
                             >
                                 Log Out
                             </button>
@@ -107,14 +118,15 @@ const Navbar = () => {
                     )}
                 </div>
 
+                {/* Mobile Menu Toggle */}
                 <button
                     type="button"
                     onClick={() => setMenuOpen((prev) => !prev)}
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] lg:hidden"
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/20 lg:hidden"
                     aria-expanded={menuOpen}
                     aria-label="Toggle navigation menu"
                 >
-                    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         {menuOpen ? (
                             <>
                                 <path d="M18 6L6 18" />
@@ -131,10 +143,12 @@ const Navbar = () => {
                 </button>
             </div>
 
+            {/* Mobile Menu */}
             {menuOpen && (
-                <div className="lg:hidden border-t border-gray-200 bg-white shadow-sm">
-                    <div className="container mx-auto flex flex-col gap-4 px-6 py-4 lg:px-10">
-                        <div className="flex flex-col gap-3">
+                <div className="lg:hidden border-t border-gray-100 bg-white shadow-lg">
+                    <div className="container mx-auto flex flex-col gap-2 px-6 py-4 lg:px-10">
+                        {/* Mobile Nav Links */}
+                        <div className="flex flex-col gap-1">
                             {navLinks.map((item) => {
                                 const isActive = pathname === item.href;
                                 return (
@@ -142,10 +156,11 @@ const Navbar = () => {
                                         key={item.href}
                                         href={item.href}
                                         onClick={() => setMenuOpen(false)}
-                                        className={`text-sm font-medium transition ${isActive
-                                            ? "text-gray-900 underline decoration-[#8B5CF6] underline-offset-8"
-                                            : "text-gray-600 hover:text-gray-900"
-                                            }`}
+                                        className={`rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                                            isActive
+                                                ? "bg-gray-50 text-gray-900"
+                                                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                                        }`}
                                         aria-current={isActive ? "page" : undefined}
                                     >
                                         {item.label}
@@ -153,39 +168,58 @@ const Navbar = () => {
                                 );
                             })}
                         </div>
-                        <div className="flex flex-col gap-3 pt-3 border-t border-gray-100">
-                            {!user && (
+
+                        {/* Mobile Auth Buttons */}
+                        <div className="mt-3 flex flex-col gap-2 pt-3 border-t border-gray-100">
+                            {!user ? (
                                 <>
                                     <Link
                                         href="/signin"
                                         onClick={() => setMenuOpen(false)}
-                                        className="rounded-full border border-gray-300 bg-gray-50 px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                        className="rounded-xl border border-gray-200 bg-white px-5 py-3 text-center text-sm font-medium text-gray-700 transition-all duration-200 hover:bg-gray-50"
                                     >
                                         Sign In
                                     </Link>
                                     <Link
                                         href="/signup"
                                         onClick={() => setMenuOpen(false)}
-                                        className="rounded-full px-5 py-2 text-sm font-semibold text-white transition hover:brightness-95"
+                                        className="rounded-xl px-5 py-3 text-center text-sm font-semibold text-white transition-all duration-200 hover:brightness-95"
                                         style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
                                     >
                                         Sign Up
                                     </Link>
                                 </>
-                            )}
-
-                            {user && (
-                                <div className="flex gap-3">
-                                    <Avatar size="sm">
-                                        <Avatar.Image
-                                            alt="John Doe"
-                                            src={user?.image}
-                                            referrerPolicy="no-referrer"
-                                        />
-                                        <Avatar.Fallback>{user?.name}</Avatar.Fallback>
-                                    </Avatar>
-
-                                    <Button classname="btn btn-soft btn-error" onClick={handleSignOut} size="sm" variant="danger">Sign Out</Button>
+                            ) : (
+                                <div className="flex flex-col gap-3">
+                                    <Link
+                                        href="/profile"
+                                        onClick={() => setMenuOpen(false)}
+                                        className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 transition-all duration-200 hover:bg-gray-50"
+                                    >
+                                        <Avatar className="h-8 w-8">
+                                            <Avatar.Image
+                                                alt={user?.name || "User"}
+                                                src={user?.image}
+                                                referrerPolicy="no-referrer"
+                                            />
+                                            <Avatar.Fallback className="bg-gradient-to-r from-[#8B5CF6] to-[#EC4899] text-white text-xs font-semibold">
+                                                {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                                            </Avatar.Fallback>
+                                        </Avatar>
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                                            <p className="text-xs text-gray-500">{user?.email}</p>
+                                        </div>
+                                    </Link>
+                                    <button
+                                        onClick={() => {
+                                            handleSignOut();
+                                            setMenuOpen(false);
+                                        }}
+                                        className="rounded-xl border border-red-200 bg-white px-5 py-3 text-center text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50"
+                                    >
+                                        Log Out
+                                    </button>
                                 </div>
                             )}
                         </div>
