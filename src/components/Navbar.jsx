@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Button } from "@heroui/react";
 
 const C = {
     gradient: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)",
@@ -17,9 +19,17 @@ const C = {
 const navLinks = [
     { label: "Home", href: "/" },
     { label: "All-Animals", href: "/all-animals" },
+    { label: "Profile", href: "/profile" },
 ];
 
 const Navbar = () => {
+    const session = authClient.useSession();
+    const user = session.data?.user;
+
+    const handleSignOut = async () => {
+        await authClient.signOut();
+    };
+
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -48,11 +58,10 @@ const Navbar = () => {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className={`text-sm font-medium transition ${
-                                    isActive
-                                        ? "text-gray-900 underline decoration-[#8B5CF6] underline-offset-8"
-                                        : "text-gray-600 hover:text-gray-900"
-                                }`}
+                                className={`text-sm font-medium transition ${isActive
+                                    ? "text-gray-900 underline decoration-[#8B5CF6] underline-offset-8"
+                                    : "text-gray-600 hover:text-gray-900"
+                                    }`}
                                 aria-current={isActive ? "page" : undefined}
                             >
                                 {item.label}
@@ -62,19 +71,40 @@ const Navbar = () => {
                 </nav>
 
                 <div className="hidden items-center gap-3 lg:flex">
-                    <Link
-                        href="/signin"
-                        className="rounded-full border border-gray-300 bg-gray-50 px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-                    >
-                        Sign In
-                    </Link>
-                    <Link
-                        href="/signup"
-                        className="rounded-full px-5 py-2 text-sm font-semibold text-white transition hover:brightness-95"
-                        style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
-                    >
-                        Sign Up
-                    </Link>
+                    {!user ? (
+                        <>
+                            <Link
+                                href="/signin"
+                                className="rounded-full border border-gray-300 bg-gray-50 px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                            >
+                                Sign In
+                            </Link>
+                            <Link
+                                href="/signup"
+                                className="rounded-full px-5 py-2 text-sm font-semibold text-white transition hover:brightness-95"
+                                style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    ) : (
+                        <div className="flex items-center gap-3">
+                            <Avatar size="sm">
+                                <Avatar.Image
+                                    alt={user?.name || "User"}
+                                    src={user?.image}
+                                    referrerPolicy="no-referrer"
+                                />
+                                <Avatar.Fallback>{user?.name?.charAt(0) || "U"}</Avatar.Fallback>
+                            </Avatar>
+                            <button
+                                onClick={handleSignOut}
+                                className="rounded-full border border-red-300 bg-red-50 px-5 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100"
+                            >
+                                Log Out
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <button
@@ -112,11 +142,10 @@ const Navbar = () => {
                                         key={item.href}
                                         href={item.href}
                                         onClick={() => setMenuOpen(false)}
-                                        className={`text-sm font-medium transition ${
-                                            isActive
-                                                ? "text-gray-900 underline decoration-[#8B5CF6] underline-offset-8"
-                                                : "text-gray-600 hover:text-gray-900"
-                                        }`}
+                                        className={`text-sm font-medium transition ${isActive
+                                            ? "text-gray-900 underline decoration-[#8B5CF6] underline-offset-8"
+                                            : "text-gray-600 hover:text-gray-900"
+                                            }`}
                                         aria-current={isActive ? "page" : undefined}
                                     >
                                         {item.label}
@@ -125,21 +154,40 @@ const Navbar = () => {
                             })}
                         </div>
                         <div className="flex flex-col gap-3 pt-3 border-t border-gray-100">
-                            <Link
-                                href="/signin"
-                                onClick={() => setMenuOpen(false)}
-                                className="rounded-full border border-gray-300 bg-gray-50 px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
-                            >
-                                Sign In
-                            </Link>
-                            <Link
-                                href="/signup"
-                                onClick={() => setMenuOpen(false)}
-                                className="rounded-full px-5 py-2 text-sm font-semibold text-white transition hover:brightness-95"
-                                style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
-                            >
-                                Sign Up
-                            </Link>
+                            {!user && (
+                                <>
+                                    <Link
+                                        href="/signin"
+                                        onClick={() => setMenuOpen(false)}
+                                        className="rounded-full border border-gray-300 bg-gray-50 px-5 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                                    >
+                                        Sign In
+                                    </Link>
+                                    <Link
+                                        href="/signup"
+                                        onClick={() => setMenuOpen(false)}
+                                        className="rounded-full px-5 py-2 text-sm font-semibold text-white transition hover:brightness-95"
+                                        style={{ background: "linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B)" }}
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            )}
+
+                            {user && (
+                                <div className="flex gap-3">
+                                    <Avatar size="sm">
+                                        <Avatar.Image
+                                            alt="John Doe"
+                                            src={user?.image}
+                                            referrerPolicy="no-referrer"
+                                        />
+                                        <Avatar.Fallback>{user?.name}</Avatar.Fallback>
+                                    </Avatar>
+
+                                    <Button classname="btn btn-soft btn-error" onClick={handleSignOut} size="sm" variant="danger">Sign Out</Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

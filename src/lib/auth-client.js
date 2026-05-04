@@ -1,5 +1,9 @@
 import { createAuthClient } from "better-auth/react"
+
 export const authClient = createAuthClient({
-    /** The base URL of the server (optional if you're using the same domain) */
-    baseURL: "https://a-08-qurbanihut.vercel.app"
+    /**
+     * Use the same domain by default, or override in production with env.
+     * This avoids failed fetch calls when running in preview/development.
+     */
+    baseURL: process.env.NEXT_PUBLIC_AUTH_BASE_URL || ""
 })
